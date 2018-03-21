@@ -29,14 +29,6 @@
                                     <action selector="heightchanged:" destination="BV1-FR-VrT" eventType="valueChanged" id="wcp-XH-wKq"/>
                                 </connections>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAw-DR-4BQ">
-                                <rect key="frame" x="176" y="167" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="selectpoint:" destination="BV1-FR-VrT" eventType="touchUpInside" id="iuk-eK-GW9"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="V6A-Qh-JZk"/>
@@ -44,7 +36,6 @@
                     <connections>
                         <outlet property="heightSlider" destination="0wd-KZ-hVK" id="yqN-9s-HN5"/>
                         <outlet property="sceneView" destination="gwt-bM-5YJ" id="Wdo-pc-s2S"/>
-                        <outlet property="selectedpoint" destination="IAw-DR-4BQ" id="qzc-7K-wTW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
