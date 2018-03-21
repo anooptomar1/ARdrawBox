@@ -165,11 +165,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
        initiatelabel()
-        
-        selectedpoint.frame = CGRect(x: view.frame.size.width/2-30, y: view.frame.size.height/2+30, width: 40, height: 40)
-        
         screenCenter = view.center
-        selectedpoint.isHidden=true
+
         
         heightSlider.isHidden=true
         
