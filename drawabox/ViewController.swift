@@ -26,9 +26,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     // MARK: - Interface Builder Connections
 
     @IBOutlet weak var sceneView: ARSCNView!
-    //
     
-
+    @IBOutlet weak var searchingLabel: UILabel!
+    
     @IBOutlet weak var heightSlider: UISlider!
 
 //    @IBOutlet weak var selectedpoint: UIButton!
@@ -539,6 +539,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Store the focal node
         self.focalNode = node
+        
+        // Hide the label (making sure we're on the main thread)
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.searchingLabel.alpha = 0.0
+            }, completion: { _ in
+                self.searchingLabel.isHidden = true
+            })
+        }
 
         
         planeNodesCount += 1
