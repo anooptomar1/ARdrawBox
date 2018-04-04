@@ -10,10 +10,10 @@
 //display the length of the sides
 //the two pts set the width, the third point extrapolate the length
 //draw a line from pt a to pt b following the button position
-//replace the button with a focal pt at the center
 //add words to it
 //set bounding box instead of drawing a box
-//proposal: move the pivot to the first point and rotate around
+//remove focal node after 3 points are drawn
+
 
 import UIKit
 import SceneKit
@@ -21,7 +21,7 @@ import ARKit
 
 
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - Interface Builder Connections
 
@@ -30,8 +30,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var searchingLabel: UILabel!
     
     @IBOutlet weak var heightSlider: UISlider!
+    
+    var panGesture: UIPanGestureRecognizer!
+    var doubleTapGesture: UITapGestureRecognizer!
+    var rotationGesture: UIRotationGestureRecognizer!
 
-//    @IBOutlet weak var selectedpoint: UIButton!
+
     // Spheres nodes
     var spheres: [SCNNode] = []
     // Measurement label
@@ -66,101 +70,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     }
     
-//    @IBAction func selectpoint(_ sender: UIButton) {
-//        let location = CGPoint(x: sender.frame.origin.x+15, y: sender.frame.origin.y+15)
-//        // Gets the location of the tap and assigns it to a constant
-//
-//        // Searches for real world objects such as surfaces and filters out flat surfaces
-//        let hitTest = sceneView.hitTest(location, types: .existingPlaneUsingExtent)
-//
-//        // Assigns the most accurate result to a constant if it is non-nil
-//        guard let result = hitTest.last else { return }
-//
-//        // Converts the matrix_float4x4 to an SCNMatrix4 to be used with SceneKit
-//        let hitTransform = result.worldTransform
-//        let vector = SCNVector3Make(hitTransform.columns.3.x,
-//                                    hitTransform.columns.3.y,
-//                                    hitTransform.columns.3.z)
-//
-//        //        let transform = SCNMatrix4.init(result.worldTransform)
-//        //
-//        //        // Creates an SCNVector3 with certain indexes in the matrix
-//        //        let vector = SCNVector3Make(transform.m41, transform.m42, transform.m43)
-//
-//        // Makes a new sphere with the created method
-//        let sphere = newSphere(at: vector)
-//
-//        // Checks if there is at least one sphere in the array
-//        if let first = spheres.first {
-//
-//            // Adds a second sphere to the array
-//            spheres.append(sphere)
-//            formatter.numberStyle = .decimal
-//            formatter.maximumFractionDigits = 3
-//            if spheres.count == 2 {
-//                let dis12=sphere.displacement(to: first)
-//                let worldoriginvector=sphere.position-SCNVector3(0,0,0)
-//                print(dis12)
-//
-//                measurementLabel.text = "width: "+formatter.string(from: sphere.distance(to: first) as NSNumber)!+"m"
-//            }
-//            if spheres.count == 3 {
-//                print(spheres[0])
-//                print(spheres[1])
-//                print(spheres[2])
-//
-//
-//                let boxlen=sphere.findheight(point1: first, point2: spheres[1]).magnitude
-//                let boxwid=first.distance(to: spheres[1])
-//                let stringlen=formatter.string(from: boxlen as NSNumber)!
-//                let stringwid=formatter.string(from: boxwid as NSNumber)!
-//
-//                center=sphere.findcenter(point1: first, point2: spheres[1])
-//                measurementLabel.text = "width: "+stringwid+"m; length: "+stringlen+"m"
-////                print(center)
-//                let p3 = sphere.findp3(point1: first, point2: spheres[1])
-////                print(p3)
-//                spheres[2]=newSphere(at: p3)
-//                createBox(position: center!, width: boxwid, length: CGFloat(boxlen))
-//                let angle=sphere.angletorotate(point1: first, point2: spheres[1])
-//
-//                newBoxNode?.eulerAngles.y+=angle
-//                heightSlider.isHidden=false
-//                selectedpoint.isHidden=true
-//
-//            }
-//
-//
-//            // If more that two are present...
-//            if spheres.count > 3 {
-//
-//                // Iterate through spheres array
-//                for sphere in spheres {
-//
-//                    // Remove all spheres
-//                    sphere.removeFromParentNode()
-//                }
-//
-//                // Remove extraneous spheres
-//                spheres = [spheres[3]]
-//            }
-//
-//            // If there are no spheres...
-//        } else {
-//            // Add the sphere
-//            spheres.append(sphere)
-//
-//        }
-//
-//        // Iterate through spheres array
-//        for sphere in spheres {
-//
-//            // Add all spheres in the array
-//            self.sceneView.scene.rootNode.addChildNode(sphere)
-//        }
-//
-//
-//    }
+
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -232,43 +142,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                                     transform.columns.3.y,
                                     transform.columns.3.z)
         
-        
-        
-        
-        
-        
-        
-        
-//        // Create a copy of the model set its position/rotation
-//        let newNode = modelNode.flattenedClone()
-//        newNode.simdPosition = position
-//
-//        // Add the model to the scene
-//        sceneView.scene.rootNode.addChildNode(newNode)
-//
-//        nodes.append(newNode)
-        
-        
-        
-//        let location = CGPoint(x: sender.frame.origin.x+15, y: sender.frame.origin.y+15)
-        // Gets the location of the tap and assigns it to a constant
-        
-        // Searches for real world objects such as surfaces and filters out flat surfaces
-//        let hitTest = sceneView.hitTest(location, types: .existingPlaneUsingExtent)
-        
-//        // Assigns the most accurate result to a constant if it is non-nil
-//        guard let result = hitTest.last else { return }
-//
-//        // Converts the matrix_float4x4 to an SCNMatrix4 to be used with SceneKit
-//        let hitTransform = result.worldTransform
-//        let vector = SCNVector3Make(hitTransform.columns.3.x,
-//                                    hitTransform.columns.3.y,
-//                                    hitTransform.columns.3.z)
-        
-        //        let transform = SCNMatrix4.init(result.worldTransform)
-        //
-        //        // Creates an SCNVector3 with certain indexes in the matrix
-        //        let vector = SCNVector3Make(transform.m41, transform.m42, transform.m43)
+
         
         // Makes a new sphere with the created method
         let sphere = newSphere(at: vector)
@@ -291,7 +165,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 print(spheres[2])
                 
                 
-                let boxlen=sphere.findheight(point1: first, point2: spheres[1]).magnitude
+                let boxlen=sphere.findheight(point1: first, point2: spheres[1]).length
                 let boxwid=first.distance(to: spheres[1])
                 let stringlen=formatter.string(from: boxlen as NSNumber)!
                 let stringwid=formatter.string(from: boxwid as NSNumber)!
@@ -312,7 +186,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
             
             
-            // If more that two are present...
+            // If more that three are present...
             if spheres.count > 3 {
                 
                 // Iterate through spheres array
@@ -340,96 +214,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.sceneView.scene.rootNode.addChildNode(sphere)
         }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
-//        // Gets the location of the tap and assigns it to a constant
-//        let location = sender.location(in: sceneView)
-//
-//        // Searches for real world objects such as surfaces and filters out flat surfaces
-//        let hitTest = sceneView.hitTest(location, types: .existingPlaneUsingExtent)
 
-//        // Assigns the most accurate result to a constant if it is non-nil
-//        guard let result = hitTest.last else { return }
-//
-//        // Converts the matrix_float4x4 to an SCNMatrix4 to be used with SceneKit
-//        let hitTransform = result.worldTransform
-//        let vector = SCNVector3Make(hitTransform.columns.3.x,
-//                                    hitTransform.columns.3.y,
-//                                    hitTransform.columns.3.z)
-
-        //        let transform = SCNMatrix4.init(result.worldTransform)
-        //
-        //        // Creates an SCNVector3 with certain indexes in the matrix
-        //        let vector = SCNVector3Make(transform.m41, transform.m42, transform.m43)
-
-//        // Makes a new sphere with the created method
-//        let sphere = newSphere(at: vector)
-//
-//        // Checks if there is at least one sphere in the array
-//        if let first = spheres.first {
-//
-//            // Adds a second sphere to the array
-//            spheres.append(sphere)
-//
-//            if spheres.count == 2 {
-//                measurementLabel.text = "width: \(sphere.distance(to: first)) meters"
-//            }
-//            if spheres.count == 3 {
-//                print(spheres[0])
-//                print(spheres[1])
-//                print(spheres[2])
-//                let boxlen=sphere.findheight(point1: first, point2: spheres[1])
-//                let boxwid=first.distance(to: spheres[1])
-//                center=sphere.findcenter(point1: first, point2: spheres[1])
-//                measurementLabel.text = "width: \(boxwid) meters;\n length:\(boxlen) meters"
-//                print(center)
-//                let p3 = sphere.findp3(point1: first, point2: spheres[1])
-//                print(p3)
-//                spheres[2]=newSphere(at: p3)
-//                createBox(position: center!, width: boxwid, length: boxlen)
-//                heightSlider.isHidden=false
-//            }
-//
-//
-//            // If more that two are present...
-//            if spheres.count > 3 {
-//
-//                // Iterate through spheres array
-//                for sphere in spheres {
-//
-//                    // Remove all spheres
-//                    sphere.removeFromParentNode()
-//                }
-//
-//                // Remove extraneous spheres
-//                spheres = [spheres[3]]
-//            }
-//
-//            // If there are no spheres...
-//        } else {
-//            // Add the sphere
-//            spheres.append(sphere)
-//
-//        }
-//
-//        // Iterate through spheres array
-//        for sphere in spheres {
-//
-//            // Add all spheres in the array
-//            self.sceneView.scene.rootNode.addChildNode(sphere)
-//        }
     }
     
     // Creates measuring endpoints
@@ -598,76 +384,4 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 }
 
 
-// MARK: - Extensions
-extension SCNNode {
-    func displacement(to destination: SCNNode)->SCNVector3{
-        let dis=position-destination.position
-        return dis
-    }
-    
-    // Gets distance between two SCNNodes
-    func distance(to destination: SCNNode) -> CGFloat {
-        
-        // Meters to inches conversion
-        //let inches: Float = 39.3701
-        
-        // Difference between x-positions
-        let dx = destination.position.x - position.x
-        
-        // Difference between x-positions
-        let dy = destination.position.y - position.y
-        
-        // Difference between x-positions
-        let dz = destination.position.z - position.z
-        
-        // Formula to get meters
-        let meters = sqrt(dx*dx + dy*dy + dz*dz)
-        
-        // Returns meters
-        return CGFloat(meters)
-    }
-    
-    func findheight(point1 dest1: SCNNode, point2 dest2: SCNNode) -> SCNVector3 {
 
-        //dest1: a dest2: b, current c
-        //used dotproduct to find the vector from line to p3
-        let ac=position-dest1.position
-        let ab=dest2.position-dest1.position
-        let abunit=ab.normalized
-        let ad=abunit*(ac.dotProduct(abunit))
-        let dc=ac-ad
-        // Returns vector
-        return dc
-    }
-    //assume only x and z varies,
-    func findcenter(point1 dest1: SCNNode, point2 dest2: SCNNode) -> SCNVector3 {
-        let p3=findp3(point1: dest1, point2: dest2)
-        let center=SCNVector3((p3.x+dest1.position.x)/2, dest1.position.y , (p3.z+dest1.position.z)/2)
-
-        // Returns center
-        return center
-    }
-    func findp3(point1 dest1: SCNNode, point2 dest2: SCNNode) -> SCNVector3 {
-        
-        let heightvector=findheight(point1: dest1, point2: dest2)
-        let p3=dest2.position+heightvector
-
-        // Returns p3
-        return p3
-    }
-    func angletorotate(point1 dest1: SCNNode, point2 dest2: SCNNode) -> Float {
-        let d=SCNVector3(dest2.position.x,dest1.position.y,dest1.position.z)// extension of p1 in x direction with same z coordinate as p2
-        let ad=d-dest1.position
-        let ab=dest2.position-dest1.position
-        var angle=ad.angleBetweenVectors(ab)
-        // Returns angle between points
-        if (dest1.position.z-dest2.position.z<0){
-            angle = (-angle)
-        }
-        if(dest1.position.x-dest2.position.x<0){
-            angle = (-angle)
-        }
-        
-        return -angle
-    }
-}
