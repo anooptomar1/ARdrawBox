@@ -7,6 +7,7 @@ iOS 11
 
 # Project code links
 [Optimization grasshopper code](https://drive.google.com/drive/folders/1jsccN_PVY-8SNShqDzLiEx8JGGjp37sp?usp=sharing)\
-[Furniture adjustment unity code](https://drive.google.com/drive/folders/1sjA5ycNz1qyNO1eyrysc_PrT6LX2e0_m?usp=sharing)
+[Furniture adjustment unity code](https://drive.google.com/drive/folders/1sjA5ycNz1qyNO1eyrysc_PrT6LX2e0_m?usp=sharing)\
+[Figma UI mockup](https://www.figma.com/proto/Hv9Z2Dd1VtksCMYzrED2Yn9N/custo-AR?node-id=429%3A129&scaling=contain)
 
 
